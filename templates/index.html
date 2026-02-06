@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Control de precios PDF vs Excel</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: 40px auto; }
+        input, button { width: 100%; margin: 10px 0; padding: 10px; }
+        .result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<h2>Control de precios</h2>
+
+<form id="form">
+    <input type="file" name="pdf" accept=".pdf" required>
+    <input type="file" name="excel" accept=".xlsx" required>
+    <button type="submit">Verificar</button>
+</form>
+
+<div class="result" id="result"></div>
+
+<script>
+document.getElementById("form").onsubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    const res = await fetch("/check", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await res.json();
+    document.getElementById("result").innerText = data.resultado;
+};
+</script>
+
+</body>
+</html>
